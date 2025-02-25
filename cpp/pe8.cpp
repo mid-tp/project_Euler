@@ -1,32 +1,62 @@
 #include <iostream>
-
+#include <vector>
+#include <fstream>
+#include <string>
 using namespace std;
 
+
+
+void add_number(int* arr, string num);
+void perform_carry(int);
+
+
 int main(){
+    // We sum 50 digit numbers, so probably 60 digits will be enough
 
+    // Initialize the files for reading in the text.
+    ifstream gridNumbers("text_inputs/problem8.txt");
+    string line;
+    // Be aware, we need a 64 bit int to store the number
+    // A regular int doesn't do the job, because it is
+    // too big to store it in only 32 bits.
+    u_int64_t product;
+    u_int64_t max_product = 0;
 
+    
+    vector<u_int8_t> prod_numbers;
+    vector<u_int8_t> max_prod_numbers;
+    vector<int> grid_numbers;
+
+    while (getline(gridNumbers, line)){
+        for (char c : line){
+            grid_numbers.push_back(c - '0');
+        }
+    }
+
+    #if 0
+    for(auto x : grid_numbers) cout << x;
+    #endif
+
+    #if 1
+    u_int8_t prod_length = 13;
+
+    for (int i = 0; i < grid_numbers.size() - prod_length; i++){
+        prod_numbers.clear();
+        product = 1;
+        for (int j = 0; j < prod_length; j++){
+            product *= grid_numbers[i + j];
+            prod_numbers.push_back(grid_numbers[i + j]);
+        }
+        if (product < max_product) continue;
+        // We found a bigger product
+        max_product = product;
+        max_prod_numbers = prod_numbers;
+
+    }
+    cout << "The value of the maximum product is " << endl;
+    for (int x : max_prod_numbers) cout << x << " * ";
+    cout << " = "<< max_product << endl;
+    #endif
+    cout << endl;
     return 0;
 }
-
-
-// 73167176531330624919225119674426574742355349194934
-// 96983520312774506326239578318016984801869478851843
-// 85861560789112949495459501737958331952853208805511
-// 12540698747158523863050715693290963295227443043557
-// 66896648950445244523161731856403098711121722383113
-// 62229893423380308135336276614282806444486645238749
-// 30358907296290491560440772390713810515859307960866
-// 70172427121883998797908792274921901699720888093776
-// 65727333001053367881220235421809751254540594752243
-// 52584907711670556013604839586446706324415722155397
-// 53697817977846174064955149290862569321978468622482
-// 83972241375657056057490261407972968652414535100474
-// 82166370484403199890008895243450658541227588666881
-// 16427171479924442928230863465674813919123162824586
-// 17866458359124566529476545682848912883142607690042
-// 24219022671055626321111109370544217506941658960408
-// 07198403850962455444362981230987879927244284909188
-// 84580156166097919133875499200524063689912560717606
-// 05886116467109405077541002256983155200055935729725
-// 71636269561882670428252483600823257530420752963450
-
