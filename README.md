@@ -1,3 +1,5 @@
+> Project Euler exists to encourage, challenge, and develop the skills and enjoyment of anyone with an interest in the fascinating world of mathematics.
+
 My code for project Euler problems. Most problems I solved with Python back in 2019. Now I am revisiting the problems to learn C++. Doing the same questions in C++ helps me to get a solid grip on efficient algorithms and data structures in this language.
 
 ## Caveat
