@@ -22,10 +22,6 @@ int main(){
         }
         grid.push_back(row);
     }
-
-    for (auto row : grid){
-        cout << "Length row is " << row.size() << endl;
-    }
     
     for (int r=grid.size() - 2; r >= 0; r--){
         for (int c = 0; c < grid[r].size(); c++)
