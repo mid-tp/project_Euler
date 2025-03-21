@@ -2,6 +2,8 @@
 #include <cmath>
 #include <vector>
 #include <unordered_set> 
+#include <assert.h>
+#include <set> 
 using namespace std;
 
 
@@ -97,4 +99,71 @@ namespace pe_methods {
         return reversed;
     }
 
-}
+
+    // Check for carry at 96, 25
+
+    namespace vec {
+        void perform_carry(vector<int> &vec){
+            for (int i = 0; i < vec.size(); i++){
+                if (vec[i] < 10) continue;
+                // We need to perform a carry
+                vec[i + 1] += (vec[i] / 10); // Dividing by 10 chops off the last digit.
+                vec[i] %= 10; // Only keep the last number
+            }
+        }
+        
+        void multiply_by_n(vector<int> &vec, int n){
+            for(int i = 0; i < vec.size(); i++){
+                vec[i] *= n;
+            }
+            perform_carry(vec);
+        }
+        
+        vector<int> add_two_vectors(vector<int> &vec1, vector<int> &vec2){
+            assert (vec1.size() == vec2.size()); // Make sure that the vectors have the same size
+            vector<int> summed_vec(vec1.size(), 0);
+            for (int i=0; i < vec1.size(); i++){
+                summed_vec[i] = (vec1[i] + vec2[i]);
+            }
+            perform_carry(summed_vec);
+            return summed_vec;
+        }
+        
+        vector<int> get_a_power_b(int a, int b, int size_alloc){
+            cout << "Computing power " << a << " ^ " << b << endl;
+            vector<int> a_pow_b(size_alloc, 0);
+            a_pow_b[0] = a;
+            for(int j=1; j < b; j++){
+                multiply_by_n(a_pow_b, a);
+            }
+            return a_pow_b;
+        }
+
+        void print_vec(vector<int> &vec){
+            bool leading_zeroes = true;
+            for (int i = vec.size() - 1; i >= 0; i--){
+                if (vec[i] != 0) leading_zeroes = false;
+                if (!leading_zeroes) cout << vec[i]; 
+            }
+            cout << endl;
+        }
+
+        u_int64_t vec_to_int(vector<int> &vec){
+            u_int64_t vec_sum = 0;
+            int size_vec = vec.size();
+            bool leading_zeroes = true;
+            int n = 0;
+            for (int i = vec.size() - 1; i >= 0; i--){
+                n += 1;
+                if (vec[i] != 0) leading_zeroes = false;
+                if (leading_zeroes) continue;
+                u_int64_t to_add = pow(10,size_vec - n) * vec[i];
+                vec_sum += to_add;
+            }
+            return vec_sum;
+        }
+
+    } // end namespace vec
+
+
+} // end namespace pe_methods
