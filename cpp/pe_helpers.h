@@ -6,13 +6,25 @@
 #include <set> 
 #include <vector>
 #include <unordered_map>
+#include <algorithm>
+#include <stdio.h>
+
+#include <fstream>
+#include <string>
+#include <sstream>
 
 using namespace std;
 namespace pe_methods {
 
+
+    // String/char
+    int get_char_alphabet_pos(char c);
+
     // Random functions
     int factorial(int n);
 
+    bool check_integer(double &n);
+    bool check_triangular(int &n);
 
     // Prime methods
     bool check_prime(int &n);
@@ -27,6 +39,15 @@ namespace pe_methods {
     void remove_last_digit(int &n);
     bool check_n_digital(int n);
     int reverse(int n);
+    
+    // Vector
+    vector<int> get_digit_vec(int n);
+    vector<int> vec_int_intersection(const vector<int> &vec1, const vector<int> &vec2);
+
+    // Sets
+    unordered_set<int> get_digit_set(int n);
+    unordered_set<int> uset_intersection(const unordered_set<int> &set1, const unordered_set<int> &set2);
+
 
 
     // Big number calculations

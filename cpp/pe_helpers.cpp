@@ -3,7 +3,10 @@
 #include <vector>
 #include <unordered_set> 
 #include <assert.h>
+#include <unordered_map>
 #include <set> 
+#include <algorithm>
+#include <cctype> // Required for toupper()
 using namespace std;
 
 
@@ -29,6 +32,29 @@ using namespace std;
 namespace pe_methods {
     // Some conventions, all methods that start with 'check' return a bool
 
+    int get_char_alphabet_pos(char c){
+        unordered_map<char, int> letter_to_num = {
+            {'A', 1}, {'B', 2}, {'C', 3}, {'D', 4}, {'E', 5}, {'F', 6},
+            {'G', 7}, {'H', 8}, {'I', 9}, {'J', 10}, {'K', 11}, {'L', 12},
+            {'M', 13}, {'N', 14}, {'O', 15}, {'P', 16}, {'Q', 17}, {'R', 18},
+            {'S', 19}, {'T', 20}, {'U', 21}, {'V', 22}, {'W', 23}, {'X', 24},
+            {'Y', 25}, {'Z', 26}, {'"', 0}
+        };
+        // Make capital
+        char capital = toupper(c);
+        return letter_to_num[capital];
+    }
+
+    bool check_integer(double &n){
+        return floor(n) == n;
+    }
+
+    bool check_triangular(int &n){
+        assert (n >= 0);
+        double to_check = (-1 + sqrt(1 + 8 * n))/2.0;
+        return check_integer(to_check);
+    }
+
     int factorial(int n){
         assert (n >= 0); 
         if (n == 0) return 1;
@@ -46,10 +72,6 @@ namespace pe_methods {
             for (int j=i*i; j < upper_limit; j += i){
                 sieved_primes[j] = false;
             }
-        }
-        for (int p = 0; p < upper_limit; p++){
-            if(!sieved_primes[p]) continue;
-            cout << p << " ";
         }
         return sieved_primes;
     }
@@ -86,6 +108,74 @@ namespace pe_methods {
     
     void remove_first_digit(int &n){
         n -= (get_first_digit(n) * pow(10, get_order(n)));
+    }
+
+    unordered_set<int> get_digit_set(int n){
+        unordered_set<int> digits;
+        while (n > 0){
+            digits.insert(get_last_digit(n));
+            remove_last_digit(n);
+        }
+        return digits;
+    }
+
+    vector<int> get_digit_vec(int n){
+        vector<int> digits;
+        while (n > 0){
+            digits.push_back(get_last_digit(n));
+            remove_last_digit(n);
+        }
+        // cout << "Elements in digit vec ";
+        // for (int x : digits) cout << x << " ";
+        // cout << endl;
+        return digits;
+    }
+
+    vector<int> vec_int_intersection(const vector<int> &vec1, const vector<int> &vec2){
+        // cout << endl << "Computing intersection" << endl;
+        // cout << "Elements in vec1 ";
+        // for (int x : vec1) cout << x << " ";
+        // cout << endl;
+
+        // cout << "Elements in vec2 ";
+        // for (int x : vec2) cout << x << " ";
+        // cout << endl;
+
+
+        unordered_set<int> added = {};
+        for (auto k : added) cout << "Added " << k << endl;
+        vector<int> intersection;
+        int size1 = vec1.size(), size2 = vec2.size();
+        assert (size1 > 0);
+        assert (size2 > 0);
+        const vector<int> &smaller_vec = (size1 < size2) ? vec1 : vec2; // if else statement in one line.
+        const vector<int> &larger_vec = (size1 < size2) ? vec2 : vec1; // if else statement in one line.
+        // Loop over the smaller set to be more efficient 
+        for (int el : smaller_vec){
+            if (find(larger_vec.begin(), larger_vec.end(), el) != larger_vec.end()){
+                // if (added.count(el) > 0) continue;
+                intersection.push_back(el);
+                added.insert(el);
+            }
+        }
+        // cout << "Elements in intersection ";
+        // for (int x : intersection) cout << x << " ";
+        // cout << endl;
+        return intersection;
+    }
+
+    unordered_set<int> uset_intersection(const unordered_set<int> &set1, const unordered_set<int> &set2){
+        unordered_set<int> intersection;
+        int size1 = set1.size(), size2 = set2.size();
+        const unordered_set<int> &smaller_set = (size1 < size2) ? set1 : set2; // if else statement in one line.
+        const unordered_set<int> &larger_set = (size1 < size2) ? set2 : set1; // if else statement in one line.
+        // Loop over the smaller set to be more efficient 
+        for (int el : smaller_set){
+            if (larger_set.count(el)){
+                intersection.insert(el);
+            }
+        }
+        return intersection;
     }
 
     void rotate(int &n){
