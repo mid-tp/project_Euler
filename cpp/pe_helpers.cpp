@@ -32,6 +32,31 @@ using namespace std;
 namespace pe_methods {
     // Some conventions, all methods that start with 'check' return a bool
 
+
+    bool check_vec_palindrome(const vector<int> &vec){
+        bool is_palindrome = true;
+        int right_ptr = vec.size() -1;
+        for (int i = 0; i < vec.size() / 2;i++){
+            if (vec[i] != vec[right_ptr]) return false;
+            right_ptr -= 1;
+        }
+        return is_palindrome;
+    }
+
+
+    vector<int> get_dec_to_base_n(int n, int num_base){
+        // Only for base 2-9
+        vector<int> new_num;
+        int rem, temp;
+        while (n > 0){
+            new_num.insert(new_num.begin(), n % num_base);
+            n /= num_base;
+        }
+        return new_num;
+    }
+
+
+
     int get_char_alphabet_pos(char c){
         unordered_map<char, int> letter_to_num = {
             {'A', 1}, {'B', 2}, {'C', 3}, {'D', 4}, {'E', 5}, {'F', 6},
@@ -45,13 +70,19 @@ namespace pe_methods {
         return letter_to_num[capital];
     }
 
-    bool check_integer(double &n){
-        return floor(n) == n;
+    bool check_integer(const double n) {
+        return std::abs(n - std::round(n)) < 1e-9; // Safer floating-point comparison
     }
 
-    bool check_triangular(int &n){
-        assert (n >= 0);
+    bool check_triangular(const long long &n){
+        assert (n > 0);
         double to_check = (-1 + sqrt(1 + 8 * n))/2.0;
+        return check_integer(to_check);
+    }
+
+    bool check_pentagonal(const long long &n){
+        assert (n > 0);
+        double to_check = (1 + sqrt(1 + 3 * 8 * n))/6.0;
         return check_integer(to_check);
     }
 
@@ -61,7 +92,8 @@ namespace pe_methods {
         return n * factorial(n - 1);
     }
 
-    vector<bool> get_sieved_primes(int &upper_limit){
+    vector<bool> get_sieved_primes(const int &upper_limit){
+        assert(upper_limit > 0);
         vector<bool> sieved_primes(upper_limit, true);
         // 0 and 1 are not prime
         sieved_primes[0] = false;
@@ -90,7 +122,7 @@ namespace pe_methods {
         return true;
     }
 
-    int get_order(int &n){
+    int get_order(const int &n){
         return log(n)/log(10);
     }
 

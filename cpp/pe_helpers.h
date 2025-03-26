@@ -22,19 +22,23 @@ namespace pe_methods {
 
     // Random functions
     int factorial(int n);
+    vector<int> get_dec_to_base_n(int n, int num_base);
+    bool check_vec_palindrome(const vector<int> &vec);
 
-    bool check_integer(double &n);
-    bool check_triangular(int &n);
+
+    bool check_integer(const double &n);
+    bool check_triangular(const long long &n);
+    bool check_pentagonal(const long long &n);
 
     // Prime methods
     bool check_prime(int &n);
-    std::vector<bool> get_sieved_primes(int &upper_limit);
+    std::vector<bool> get_sieved_primes(const int &upper_limit);
 
     // Digit manipulation/checking
     void rotate(int &n);
     void remove_first_digit(int &n);
     int get_first_digit(int n);
-    int get_order(int &n);
+    int get_order(const int &n);
     int get_last_digit(int &n);
     void remove_last_digit(int &n);
     bool check_n_digital(int n);
