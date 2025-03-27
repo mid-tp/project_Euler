@@ -82,7 +82,13 @@ namespace pe_methods {
 
     bool check_pentagonal(const long long &n){
         assert (n > 0);
-        double to_check = (1 + sqrt(1 + 3 * 8 * n))/6.0;
+        double to_check = (1 + sqrt(1 + 4 * 3 * 2 * n))/6.0;
+        return check_integer(to_check);
+    }
+
+    bool check_hexagonal(const long long &n){
+        assert (n > 0);
+        double to_check = (1 + sqrt(1 + 4 * 2 * 1 * n))/4.0;
         return check_integer(to_check);
     }
 
@@ -106,6 +112,17 @@ namespace pe_methods {
             }
         }
         return sieved_primes;
+    }
+
+
+    vector<int> get_prime_list(const int &upper_limit){
+        const vector<bool> primes_sieved = pe_methods::get_sieved_primes(upper_limit); // probably enough
+        vector<int> primes;
+        for (int j = 0; j < primes_sieved.size(); j++){
+            if (!primes_sieved[j]) continue;
+            primes.push_back(j);
+        }
+        return primes;
     }
 
     bool check_prime(int &n){
@@ -163,19 +180,17 @@ namespace pe_methods {
         return digits;
     }
 
-    vector<int> vec_int_intersection(const vector<int> &vec1, const vector<int> &vec2){
-        // cout << endl << "Computing intersection" << endl;
-        // cout << "Elements in vec1 ";
-        // for (int x : vec1) cout << x << " ";
-        // cout << endl;
-
-        // cout << "Elements in vec2 ";
-        // for (int x : vec2) cout << x << " ";
-        // cout << endl;
+    unordered_set<int> set_union(const unordered_set<int>& set1, const unordered_set<int>& set2) {
+        // Insert all elements of set1 into union_set
+        unordered_set<int> union_set(set1.begin(), set1.end());
+        // Insert elements of set2 (duplicates are automatically ignored)
+        union_set.insert(set2.begin(), set2.end());
+        return union_set;
+    }
 
 
+    vector<int> get_vec_int_intersection(const vector<int> &vec1, const vector<int> &vec2){
         unordered_set<int> added = {};
-        for (auto k : added) cout << "Added " << k << endl;
         vector<int> intersection;
         int size1 = vec1.size(), size2 = vec2.size();
         assert (size1 > 0);
@@ -190,13 +205,10 @@ namespace pe_methods {
                 added.insert(el);
             }
         }
-        // cout << "Elements in intersection ";
-        // for (int x : intersection) cout << x << " ";
-        // cout << endl;
         return intersection;
     }
 
-    unordered_set<int> uset_intersection(const unordered_set<int> &set1, const unordered_set<int> &set2){
+    unordered_set<int> get_uset_intersection(const unordered_set<int> &set1, const unordered_set<int> &set2){
         unordered_set<int> intersection;
         int size1 = set1.size(), size2 = set2.size();
         const unordered_set<int> &smaller_set = (size1 < size2) ? set1 : set2; // if else statement in one line.
@@ -257,6 +269,13 @@ namespace pe_methods {
         }
         if (negative) n *= -1;
         return reversed;
+    }
+
+
+    bool check_set_n_digital(const unordered_set<int>& set, const int n){
+        unordered_set<int> check;
+        for (int i = 1; i <= n; i++) check.insert(i);
+        return check == set;
     }
 
 

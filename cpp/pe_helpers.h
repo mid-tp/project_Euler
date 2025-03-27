@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <algorithm>
 #include <stdio.h>
-
+#include <assert.h>
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -29,10 +29,12 @@ namespace pe_methods {
     bool check_integer(const double &n);
     bool check_triangular(const long long &n);
     bool check_pentagonal(const long long &n);
+    bool check_hexagonal(const long long &n);
 
     // Prime methods
     bool check_prime(int &n);
     std::vector<bool> get_sieved_primes(const int &upper_limit);
+    vector<int> get_prime_list(const int &upper_limit);
 
     // Digit manipulation/checking
     void rotate(int &n);
@@ -46,11 +48,13 @@ namespace pe_methods {
     
     // Vector
     vector<int> get_digit_vec(int n);
-    vector<int> vec_int_intersection(const vector<int> &vec1, const vector<int> &vec2);
+    vector<int> get_vec_int_intersection(const vector<int> &vec1, const vector<int> &vec2);
 
     // Sets
     unordered_set<int> get_digit_set(int n);
-    unordered_set<int> uset_intersection(const unordered_set<int> &set1, const unordered_set<int> &set2);
+    unordered_set<int> get_uset_intersection(const unordered_set<int> &set1, const unordered_set<int> &set2);
+    unordered_set<int> set_union(const unordered_set<int>& set1, const unordered_set<int>& set2);
+    bool check_set_n_digital(const unordered_set<int>& set, const int n);
 
 
 

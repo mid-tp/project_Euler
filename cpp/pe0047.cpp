@@ -1,7 +1,6 @@
 #include "pe_helpers.h"
 
-const vector<bool> primes_sieved = pe_methods::get_sieved_primes(1000000); // probably enough
-
+const vector<int> primes = pe_methods::get_prime_list(1000000); // probably enough
 
 void add_factor(vector<int>& factors, int p){
     bool found = false;
@@ -33,8 +32,8 @@ vector<int> get_prime_factors(int n){
 
     while(n > 1){
         // We can start from 3 and only check the odd numbers
-        for (int p = 3; p  <= n; p += 2){
-            if (!primes_sieved[p]) continue;
+        for (int p : primes){
+            if (p > n) break;
             if (n % p != 0) continue;
             add_factor(prime_factors, p);     
             n /= p;     
@@ -48,8 +47,6 @@ vector<int> get_prime_factors(int n){
 
     return prime_factors;
 }
-
-
 
 
 int main(){
